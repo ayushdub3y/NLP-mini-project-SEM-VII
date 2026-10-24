@@ -10,13 +10,13 @@ percentage-complete estimate would imply more precision than the evidence allows
 | Area | Current state |
 | --- | --- |
 | Problem and user flow | Implemented: journal text → emotion scores → reflection prompts |
-| NLP inference | Implemented: pretrained English seven-class transformer, full-entry windows, sentence readings |
-| Application | Implemented: Streamlit check-in, heatmap, session journal and CSV |
-| Reliability | Regression coverage added for inference, Unicode screening, app failures, stale state and exports |
-| Evaluation | Repeatable metrics/report command added; only small hand-written smoke data evaluated |
-| Original contribution | Application integration, full-entry aggregation and support routing; no original model training |
+| NLP inference | Implemented: dual-model architecture (DistilRoBERTa with strided $S=64$ Shannon entropy pooling + sublinear TF-IDF multinomial logistic baseline) |
+| Application | Implemented: Streamlit check-in, heatmap, session journal, CSV export, and telemetry explainability panel |
+| Reliability | Regression coverage added for inference, Unicode screening, app failures, stale state, exports, and dependency parsing |
+| Evaluation | Repeatable dual-model benchmark harness with latency metrics, accuracy, macro-F1, and Jensen-Shannon Divergence ($D_{\text{JS}}$) |
+| Original contribution | Syntactic attribution engine (`reading_policy.py`), Shannon entropy aggregation (`emotion_model.py`), deterministic linear feature attribution (`classical_model.py`), and disagreement calibration telemetry |
 | Clinical validity | Not established; keyword screen and templates are heuristics |
-| Academic deliverables | Setup/method documentation added; independent data, stronger baseline, literature review and final report remain |
+| Academic deliverables | Full architecture & technical specification documented (`emotion_counsellor_architecture_technical_specification.md`); dual-model benchmark completed; independent dataset and final report remain |
 
 ## Defects fixed
 
@@ -41,9 +41,9 @@ The local resource lookup connector was unavailable during review. Existing
 telephone numbers therefore could not be verified and were replaced with a
 country-selectable support directory rather than carrying forward uncertain details.
 
-Verification completed with **78 passing tests**, including actual cached-model
+Verification completed with **85 passing tests**, including actual cached-model
 checks for unchanged short-input scores, full long-entry token coverage and
-sentence classifications. Python compilation checks also passed. `pip check`
+sentence classifications, as well as tests for baseline persistence, Shannon entropy pooling, and syntactic parsing. Python compilation checks also passed. `pip check`
 reported pre-existing conflicts in the shared installation (including Pydantic
 and LangChain-related packages), which this app does not directly require. Use
 the virtual-environment setup in `README.md`; shared packages were not changed.

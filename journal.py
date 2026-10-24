@@ -13,8 +13,10 @@ def export_csv(history):
     writer.writeheader()
     for entry in history:
         row = dict(entry)
-        text = row["text"]
+        text = str(row.get("text") or "")
         if text.lstrip().startswith(("=", "+", "-", "@")) or text.startswith(("\t", "\r", "\n")):
             row["text"] = "'" + text
+        else:
+            row["text"] = text
         writer.writerow(row)
     return output.getvalue()

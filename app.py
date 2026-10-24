@@ -62,7 +62,7 @@ def bar_chart(scores):
     fig.update_layout(
         height=300, margin=dict(l=0, r=40, t=0, b=0), bargap=0.45,
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        xaxis=dict(visible=False, range=[0, max(scores.values()) * 1.15]),
+        xaxis=dict(visible=False, range=[0, max(max(scores.values() if scores else [0.0]) * 1.15, 0.05)]),
         yaxis=dict(tickfont=dict(color="#ededed", size=16, family=FONT), showgrid=False, ticks="", fixedrange=True),
     )
     return fig
@@ -127,11 +127,42 @@ def render_result(last):
     else:
         st.plotly_chart(bar_chart(scores), use_container_width=True, config={"displayModeBar": False})
 
-    if result["sentences"]:
+    if result.get("sentences"):
         with st.expander("See it sentence by sentence"):
             rows = "".join(f'<div class="srow"><span class="t">{html.escape(s["sentence"])}</span>'
                            f'<span class="tag">{"Needs context" if s.get("reading_status") == "needs_context" else s["emotion"]}</span></div>' for s in result["sentences"])
             md(rows)
+
+    divergence_js = result.get("divergence_js")
+    baseline_info = result.get("baseline")
+    entropy_val = result.get("entropy")
+
+    if divergence_js is not None and divergence_js > 0.35 and not needs_context:
+        st.info(f"Calibration notice: Notable divergence detected (JS divergence: {divergence_js:.2f}) "
+                "between surface vocabulary and contextual semantics.")
+
+    if baseline_info or entropy_val is not None:
+        with st.expander("Telemetry & Model Explainability"):
+            col1, col2 = st.columns(2)
+            with col1:
+                if entropy_val is not None:
+                    st.metric("Shannon Entropy", f"{entropy_val:.3f}",
+                              help="0 = complete certainty, 1 = uniform uncertainty")
+            with col2:
+                if divergence_js is not None:
+                    st.metric("JS Divergence", f"{divergence_js:.3f}",
+                              help="Disagreement between statistical baseline and contextual model")
+            if baseline_info and baseline_info.get("attributions"):
+                st.markdown("**Deterministic Feature Attribution (TF-IDF Coefficients):**")
+                chip_list = []
+                for item in baseline_info["attributions"]:
+                    feat = html.escape(item["feature"])
+                    sal = item["salience"]
+                    chip_list.append(f'<span class="tag" style="margin-right:6px;" title="Salience: {sal:.3f}">{feat} ({sal:+.2f})</span>')
+                chips = " ".join(chip_list)
+                md(f'<div style="margin-top:6px; margin-bottom:10px;">{chips}</div>')
+                st.caption(f"Statistical baseline top prediction: **{baseline_info['top'].title()}** ({baseline_info['confidence']:.0%})")
+
 
     md('<hr class="rule"><p class="eyebrow">A moment of reflection</p>'
        f'<p class="quote">{html.escape(reply["validation"])}</p><div class="spacer"></div>')

@@ -50,3 +50,32 @@ def test_joy_feedback_does_not_celebrate_the_action():
     assert "Does that fit" in reply["validation"]
     assert "Share the good news with someone close to you." not in reply["strategies"]
     assert any("anyone else" in step for step in reply["strategies"])
+
+
+def test_long_distance_syntactic_negation():
+    # Long distance negation across prepositional phrase
+    text = "I did not, despite all their reassurance, feel particularly happy."
+    result = reading_policy.assess(text)
+    assert result["status"] == "needs_context"
+    assert result["reason"] == "negated_feeling"
+
+
+def test_third_person_affective_attribution():
+    text = "My supervisor was furious."
+    result = reading_policy.assess(text)
+    assert result["status"] == "needs_context"
+    assert result["reason"] == "other_person_context"
+
+
+@pytest.mark.parametrize("text", [
+    "I no longer feel happy",
+    "I never feel joy",
+    "I hardly feel happy anymore",
+    "I cannot feel happy about this",
+])
+def test_adverbial_and_compound_negations(text):
+    result = reading_policy.assess(text)
+    assert result["status"] == "needs_context"
+    assert result["reason"] == "negated_feeling"
+
+

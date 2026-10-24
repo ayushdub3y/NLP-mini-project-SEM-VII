@@ -123,6 +123,20 @@ button[data-baseweb="tab"][aria-selected="true"] p, button[data-baseweb="tab"]:h
 [data-testid="stPlotlyChart"] { margin: 0 0 var(--s4); }
 [data-testid="stCaptionContainer"] p { color: var(--text-3); font-size: .9rem; }
 
+/* ---------- Metrics ---------- */
+[data-testid="stMetricValue"] div {
+  font-family: var(--font) !important;
+  color: var(--text) !important;
+  font-size: 1.75rem !important;
+}
+[data-testid="stMetricLabel"] p {
+  font-family: var(--font) !important;
+  color: var(--text-2) !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+}
+
 @media (max-width: 640px) {
   .h-display { font-size: 2.25rem; }
   .result-title { font-size: 3rem; }

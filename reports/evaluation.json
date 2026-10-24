@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-10-12T20:51:08.909511+00:00",
+  "created_at": "2026-10-22T20:30:18.347116+00:00",
   "model": "j-hartmann/emotion-english-distilroberta-base",
   "model_revision": "0e1cd914e3d46199ed785853e12b57304e04178b",
   "dataset": "C:\\Users\\ayush\\OneDrive\\Documents 1\\college\\programming\\NLP mini project\\EvidenceGraph\\EmotionCounsellor\\data\\evaluation.csv",
@@ -250,41 +250,266 @@
       ]
     ]
   },
-  "model_load_seconds": 8.676560600055382,
-  "mean_inference_seconds": 0.018382168581177083,
-  "uncertain_entries": 14,
-  "context_requests": 14,
+  "model_load_seconds": 73.55265179999697,
+  "mean_inference_seconds": 0.10505762857127203,
+  "uncertain_entries": 17,
+  "context_requests": 17,
   "metric_scope": "Metrics evaluate raw transformer labels on all rows, including entries the application abstains on.",
   "errors": [
     {
       "text": "The delays are really frustrating me.",
       "expected": "anger",
       "predicted": "sadness",
-      "model_score": 0.6800593137741089
+      "model_score": 0.6800593180492523
     },
     {
       "text": "I bought bread and milk at the shop.",
       "expected": "neutral",
       "predicted": "joy",
-      "model_score": 0.38491129875183105
+      "model_score": 0.38491128584667456
     },
     {
       "text": "I took the bus to college and attended two classes.",
       "expected": "neutral",
       "predicted": "joy",
-      "model_score": 0.8724583983421326
+      "model_score": 0.8724583909277033
     },
     {
       "text": "The book is on the table beside the window.",
       "expected": "neutral",
       "predicted": "disgust",
-      "model_score": 0.6693975329399109
+      "model_score": 0.669397459375765
     }
   ],
+  "dual_model_benchmark": {
+    "transformer": {
+      "name": "j-hartmann/emotion-english-distilroberta-base",
+      "accuracy": 0.8857142857142857,
+      "macro_f1": 0.8731189445475159,
+      "mean_latency_sec": 0.10505762857127203
+    },
+    "statistical_baseline": {
+      "name": "Sublinear TF-IDF (1-2 grams) + Logistic Regression",
+      "accuracy": 1.0,
+      "macro_f1": 1.0,
+      "mean_latency_sec": 0.0005249400007804589
+    },
+    "telemetry": {
+      "mean_js_divergence": 0.4264533449909392,
+      "max_js_divergence": 0.5150528923336082,
+      "agreement_rate": 0.8857142857142857,
+      "high_divergence_samples": [
+        {
+          "text": "I can't believe he lied to me again. I'm furious.",
+          "expected": "anger",
+          "transformer_pred": "anger",
+          "baseline_pred": "anger",
+          "js_divergence": 0.467
+        },
+        {
+          "text": "Stop interrupting me! I am so angry with you.",
+          "expected": "anger",
+          "transformer_pred": "anger",
+          "baseline_pred": "anger",
+          "js_divergence": 0.4521
+        },
+        {
+          "text": "They treated me unfairly and I'm absolutely livid.",
+          "expected": "anger",
+          "transformer_pred": "anger",
+          "baseline_pred": "anger",
+          "js_divergence": 0.4236
+        },
+        {
+          "text": "The smell of rotten food makes me feel sick.",
+          "expected": "disgust",
+          "transformer_pred": "disgust",
+          "baseline_pred": "disgust",
+          "js_divergence": 0.3874
+        },
+        {
+          "text": "That filthy bathroom is revolting.",
+          "expected": "disgust",
+          "transformer_pred": "disgust",
+          "baseline_pred": "disgust",
+          "js_divergence": 0.4581
+        },
+        {
+          "text": "I am disgusted by his cruel behaviour.",
+          "expected": "disgust",
+          "transformer_pred": "disgust",
+          "baseline_pred": "disgust",
+          "js_divergence": 0.4808
+        },
+        {
+          "text": "I found a dead insect in my food. How gross!",
+          "expected": "disgust",
+          "transformer_pred": "disgust",
+          "baseline_pred": "disgust",
+          "js_divergence": 0.4629
+        },
+        {
+          "text": "The mouldy leftovers are repulsive.",
+          "expected": "disgust",
+          "transformer_pred": "disgust",
+          "baseline_pred": "disgust",
+          "js_divergence": 0.447
+        },
+        {
+          "text": "I'm terrified about tomorrow's exam. My heart won't stop racing.",
+          "expected": "fear",
+          "transformer_pred": "fear",
+          "baseline_pred": "fear",
+          "js_divergence": 0.4917
+        },
+        {
+          "text": "I'm afraid someone is following me.",
+          "expected": "fear",
+          "transformer_pred": "fear",
+          "baseline_pred": "fear",
+          "js_divergence": 0.4857
+        },
+        {
+          "text": "I keep worrying that something terrible will happen.",
+          "expected": "fear",
+          "transformer_pred": "fear",
+          "baseline_pred": "fear",
+          "js_divergence": 0.4602
+        },
+        {
+          "text": "The thought of speaking on stage fills me with dread.",
+          "expected": "fear",
+          "transformer_pred": "fear",
+          "baseline_pred": "fear",
+          "js_divergence": 0.4846
+        },
+        {
+          "text": "I am nervous about the results and cannot stop shaking.",
+          "expected": "fear",
+          "transformer_pred": "fear",
+          "baseline_pred": "fear",
+          "js_divergence": 0.4883
+        },
+        {
+          "text": "I just got the job offer. I'm so happy!",
+          "expected": "joy",
+          "transformer_pred": "joy",
+          "baseline_pred": "joy",
+          "js_divergence": 0.4686
+        },
+        {
+          "text": "I am delighted to see my friends again.",
+          "expected": "joy",
+          "transformer_pred": "joy",
+          "baseline_pred": "joy",
+          "js_divergence": 0.4869
+        },
+        {
+          "text": "We won the competition and I feel overjoyed.",
+          "expected": "joy",
+          "transformer_pred": "joy",
+          "baseline_pred": "joy",
+          "js_divergence": 0.4921
+        },
+        {
+          "text": "I feel proud of myself and excited about the future.",
+          "expected": "joy",
+          "transformer_pred": "joy",
+          "baseline_pred": "joy",
+          "js_divergence": 0.4477
+        },
+        {
+          "text": "Today was wonderful. I couldn't stop smiling.",
+          "expected": "joy",
+          "transformer_pred": "joy",
+          "baseline_pred": "joy",
+          "js_divergence": 0.4795
+        },
+        {
+          "text": "I took the bus to college and attended two classes.",
+          "expected": "neutral",
+          "transformer_pred": "joy",
+          "baseline_pred": "neutral",
+          "js_divergence": 0.5151
+        },
+        {
+          "text": "I feel so alone and nothing makes me happy anymore.",
+          "expected": "sadness",
+          "transformer_pred": "sadness",
+          "baseline_pred": "sadness",
+          "js_divergence": 0.4726
+        },
+        {
+          "text": "I miss my friend and feel heartbroken.",
+          "expected": "sadness",
+          "transformer_pred": "sadness",
+          "baseline_pred": "sadness",
+          "js_divergence": 0.4709
+        },
+        {
+          "text": "I cried all evening after hearing the news.",
+          "expected": "sadness",
+          "transformer_pred": "sadness",
+          "baseline_pred": "sadness",
+          "js_divergence": 0.4558
+        },
+        {
+          "text": "I feel empty and disappointed after failing my exam.",
+          "expected": "sadness",
+          "transformer_pred": "sadness",
+          "baseline_pred": "sadness",
+          "js_divergence": 0.4627
+        },
+        {
+          "text": "I am grieving the loss of someone dear to me.",
+          "expected": "sadness",
+          "transformer_pred": "sadness",
+          "baseline_pred": "sadness",
+          "js_divergence": 0.4812
+        },
+        {
+          "text": "Wow! I never expected you to be here.",
+          "expected": "surprise",
+          "transformer_pred": "surprise",
+          "baseline_pred": "surprise",
+          "js_divergence": 0.4544
+        },
+        {
+          "text": "I was astonished when I opened the door.",
+          "expected": "surprise",
+          "transformer_pred": "surprise",
+          "baseline_pred": "surprise",
+          "js_divergence": 0.4528
+        },
+        {
+          "text": "What a surprise! I had no idea this was happening.",
+          "expected": "surprise",
+          "transformer_pred": "surprise",
+          "baseline_pred": "surprise",
+          "js_divergence": 0.4508
+        },
+        {
+          "text": "I couldn't believe my eyes when I saw the announcement.",
+          "expected": "surprise",
+          "transformer_pred": "surprise",
+          "baseline_pred": "surprise",
+          "js_divergence": 0.4326
+        },
+        {
+          "text": "That was completely unexpected. I'm stunned.",
+          "expected": "surprise",
+          "transformer_pred": "surprise",
+          "baseline_pred": "surprise",
+          "js_divergence": 0.4538
+        }
+      ]
+    }
+  },
   "versions": {
     "torch": "2.13.0",
     "transformers": "5.15.0",
     "streamlit": "1.65.0",
-    "plotly": "7.1.0"
+    "plotly": "7.1.0",
+    "spacy": "3.8.16"
   }
 }

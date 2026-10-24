@@ -123,7 +123,7 @@ def respond(result):
                            "Consider talking through the entry with someone you trust."],
             "prompts": ["Which feeling words fit best for you?", "What would support you right now?"],
         }
-    info = SUPPORT[result["top"]]
+    info = SUPPORT.get(result.get("top"), SUPPORT["neutral"])
     return deepcopy(info)
 
 

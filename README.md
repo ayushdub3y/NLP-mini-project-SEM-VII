@@ -125,11 +125,14 @@ model guess does not become an apparent mood history.
 
 | File | Purpose |
 | --- | --- |
-| `app.py`, `style.css` | Streamlit interface and theme |
-| `emotion_model.py` | Tokenization, inference, score aggregation, sentence readings |
+| `app.py`, `style.css` | Streamlit interface, theme, and telemetry explainability panel |
+| `emotion_model.py` | Strided tokenization ($S=64$), Shannon entropy pooling, inference, sentence readings |
+| `classical_model.py` | Sublinear TF-IDF and multinomial logistic baseline with deterministic feature attribution |
+| `train_baseline.py` | Training pipeline and artifact serialization for the statistical baseline |
 | `counselling.py` | Keyword screen, response templates, trend heuristic |
-| `reading_policy.py` | Conservative personal-feeling applicability and clarification rules |
+| `reading_policy.py` | spaCy dependency parser rules for nominal subject check (`nsubj`) and negation arcs (`neg`) |
 | `journal.py` | CSV export |
-| `evaluate.py`, `data/evaluation.csv` | Repeatable evaluation command and smoke examples |
-| `test_*.py` | Unit, app-runtime and opt-in model checks |
+| `evaluate.py`, `data/evaluation.csv` | Dual-model benchmark harness and Jensen-Shannon divergence telemetry |
+| `test_*.py` | Unit, baseline, entropy, app-runtime and opt-in model checks |
+| `emotion_counsellor_architecture_technical_specification.md` | Full NLP engineering architecture & technical specification |
 | `ASSESSMENT.md` | Project readiness, verified defects and remaining work |

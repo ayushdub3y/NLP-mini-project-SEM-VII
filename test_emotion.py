@@ -66,8 +66,8 @@ def test_windows_include_tail_and_keep_samples_separate(toy):
 
 
 def test_partial_window_is_weighted_by_content_tokens(toy):
-    scores, _ = em._analyse(["joy joy joy joy sadness"])
-    first, tail = em._scores(["joy joy joy joy", "sadness"])
+    scores, _ = em._analyse(["joy joy joy joy sadness"], pooling="content_tokens")
+    first, tail = em._scores(["joy joy joy joy", "sadness"], pooling="content_tokens")
     assert scores[0]["joy"] == pytest.approx((first["joy"] * 4 + tail["joy"]) / 5)
 
 
